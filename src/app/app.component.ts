@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
   loadedPosts = [];
@@ -14,21 +14,32 @@ export class AppComponent implements OnInit {
   ngOnInit() {}
 
   onCreatePost(postData: { title: string; content: string }) {
-    console.log('-->' + JSON.stringify(postData));
+    console.log("-->" + JSON.stringify(postData));
     // Send Http request
-    this.http.post('https://ng-complete-guide-9702c.firebaseio.com/posts.json', postData).subscribe(
-      responseData => {
+    this.http
+      .post(
+        "https://ng-complete-guide-9702c.firebaseio.com/posts.json",
+        postData
+      )
+      .subscribe((responseData) => {
         console.log(responseData);
-
-      }
-    );
+      });
   }
 
   onFetchPosts() {
     // Send Http request
+    this.fetchPosts();
   }
 
   onClearPosts() {
     // Send Http request
+  }
+
+  private fetchPosts() {
+    this.http
+      .get("https://ng-complete-guide-9702c.firebaseio.com/posts.json")
+      .subscribe((posts) => {
+        console.log(posts);
+      });
   }
 }
