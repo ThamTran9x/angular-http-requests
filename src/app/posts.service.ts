@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Post } from './post-model';
 import { map, catchError } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
@@ -22,9 +22,13 @@ export class PostsService {
   }
 
   fetchPosts() {
+    let searchParams = new HttpParams();
+    searchParams = searchParams.append('print', 'pretty');
+    searchParams = searchParams.append('custom', 'key');
     return this.http
       .get<{ [key: string]: Post }>('https://ng-complete-guide-9702c.firebaseio.com/posts.json', {
         headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
+        params: searchParams
       })
       .pipe(
         map((responseData) => {
